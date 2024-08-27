@@ -10,6 +10,7 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: 
     const authReq = req.clone({
       setHeaders: {
         // Authorization: `Bearer ${sessionStorage.getItem('access_token')}`,
+        'Content-Type': 'application/json'
       },
     });
   
