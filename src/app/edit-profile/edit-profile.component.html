@@ -1,0 +1,148 @@
+<!-- Modal toggle -->
+
+<!-- Main modal -->
+<div
+  id="crud-modal"
+  tabindex="-1"
+  class="flex overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
+>
+  <div class="relative p-4 w-auto  max-h-full">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <!-- Modal header -->
+      <div
+        class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600"
+      >
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+          Edit Profile
+        </h3>
+        <button
+          type="button"
+          class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+          data-modal-toggle="crud-modal"
+          (click)="closeTheDialog()"
+        >
+          <svg
+            class="w-3 h-3"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 14 14"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+            />
+          </svg>
+          <span class="sr-only">Close modal</span>
+        </button>
+      </div>
+      <!-- Modal body -->
+      <form class="p-4 md:p-5" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="grid gap-4 mb-4 grid-cols-2">
+          <div class="col-span-2 sm:col-span-1">
+            <label
+              for="name"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Name</label
+            >
+            <mat-form-field appearance="outline">
+                <mat-label>Name</mat-label>
+                <input matInput placeholder="Placeholder" formControlName="name">
+              </mat-form-field>
+          </div>
+          <div class="col-span-2 sm:col-span-1">
+            <label
+              for="designation"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Designation</label
+            >
+            <mat-form-field appearance="outline">
+                <mat-select  formControlName="designation"  >
+                  <mat-option *ngFor="let designation of designations" [value]="designation.DesignationName">{{ designation.DesignationName }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+          </div>
+          <div class="col-span-2 sm:col-span-1">
+            <label
+              for="price"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Email</label
+            >
+            <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="Placeholder" formControlName="email">
+              </mat-form-field>
+          </div>
+          <div class="col-span-2 sm:col-span-1">
+            <label
+              for="category"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Skills</label
+            >
+            <mat-form-field appearance="outline">
+                <mat-select  formControlName="skill"  multiple>
+                  <mat-option *ngFor="let skill of skills" [value]="skill.SkillName">{{skill.SkillName}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+          </div>
+          <div class="col-span-full">
+            <label
+              for="photo"
+              class="block text-sm font-medium leading-6 text-gray-900"
+              >Photo</label
+            >
+            <div class="mt-2 flex items-center gap-x-3">
+              <svg
+                class="h-12 w-12 text-gray-300"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              <button
+                type="button"
+                class="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+              >
+                <input type="file" formControlName="photo" />
+              </button>
+            </div>
+          </div>
+          <div class="col-span-full">
+            <label
+              for="about"
+              class="block text-sm font-medium leading-6 text-gray-900"
+              >About</label
+            >
+            <div class="mt-2">
+              <textarea
+                id="about"
+                name="about"
+                rows="3"
+                formControlName="about"
+                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              ></textarea>
+            </div>
+            <p class="mt-3 text-sm leading-6 text-gray-600">
+              Write a few sentences about yourself.
+            </p>
+          </div>
+        </div>
+        <button
+          type="submit"
+          class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        >
+          Save Changes
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

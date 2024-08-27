@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Router,NavigationStart, RoutesRecognized, RouteConfigLoadStart, RouteConfigLoadEnd, NavigationEnd, NavigationCancel, NavigationError, ChildActivationStart, ChildActivationEnd } from '@angular/router';
 
-
 @Component({
   selector: 'app-dashboard',
   standalone: true,

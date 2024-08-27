@@ -1,0 +1,49 @@
+<div class="max-w-sm mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+  <div class="px-6 py-4">
+    <h2 class="text-xl font-semibold text-gray-800">Product Details</h2>
+    <p class="text-gray-600 mt-2">
+      Name: <span class="font-bold">{{ name | uppercase }}</span>
+    </p>
+    <p class="text-gray-600 mt-2">
+      Product Price:
+      <span class="font-bold">{{ price | currency : "USD" }}</span>
+    </p>
+    <p class="text-gray-600 mt-2">
+      Date: <span class="font-bold">{{ date | date : "fullDate" }}</span>
+    </p>
+    <p class="text-gray-600 mt-2">
+      Product Unit: <span class="font-bold">{{ pi | number : "1.2-2" }}</span>
+    </p>
+    <p class="text-gray-600 mt-2">
+      Profit Percentage:
+      <span class="font-bold">{{ fraction | percent : "1.1-2" }}</span>
+    </p>
+    <p class="text-gray-600 mt-2">
+      Product details: <span class="font-bold">{{ obj | json }}</span>
+    </p>
+  </div>
+</div>
+<!--Custom Pipe-->
+<div class="max-w-sm mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+  <div class="px-6 py-4">
+    <!-- <input type="text" [(ngModel)]="searchText" placeholder="Search by name" /> -->
+    <div>
+      <label
+        for="first_name"
+        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        >Search</label
+      >
+      <input
+        type="text"
+        id="first_name"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        [(ngModel)]="searchText" placeholder="Search by name" 
+      />
+    </div>
+    <ul>
+      <li *ngFor="let user of users | filter : searchText : 'name'">
+        {{ user.name }} ({{ user.age }} years old)
+      </li>
+    </ul>
+  </div>
+</div>

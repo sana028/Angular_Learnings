@@ -1,0 +1,8 @@
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Adjust according to your container */
+  background-color: rgba(128, 128, 128, 0.466);
+}
+

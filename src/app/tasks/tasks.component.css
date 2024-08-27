@@ -1,0 +1,30 @@
+.btn-color{
+    background-color: rgba(63, 81, 181, 0.87);
+}
+.actions-menu {
+    position: relative; /* Relative to this container */
+    display: inline-block;
+  }
+  
+  .dropdown-content {
+    position: absolute; /* Position dropdown relative to actions-menu */
+    top: 100%; /* Position directly below the icon */
+    left: 0;
+    display: none; /* Initially hidden */
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    z-index: 1000; /* Ensure it appears on top */
+    padding: 10px;
+    min-width: 150px;
+  }
+  
+  .actions-menu.open .dropdown-content {
+    display: block; /* Show dropdown when actions-menu is open */
+  }
+  
+  .card a:hover {
+    background-color: #f0f0f0;
+  }
+  
