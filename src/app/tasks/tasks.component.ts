@@ -73,12 +73,9 @@ export class TasksComponent implements AfterViewInit, OnInit {
               (key) => key !== 'Id' && key !== 'Description'
             );
             this.displayedColumns.push('actions');
-            
-            this.dataSource.sort = sort;
           } else {
             console.error('Response format is not as expected');
           }
-          
           this.dataSource.sort = this.sort;
         }
       },

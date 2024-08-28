@@ -6,7 +6,6 @@ import generateToken from "../jwtToken.mjs";
 const router = express.Router();
 
 router.post("/createAccount", async (req, res) => {
-  console.log(req);
   const { userId, name, email, password } = req.body;
   const saveUserCredentials = `INSERT INTO ${DB_Data.Credentails_DB} (Id,Name, Email, Password) VALUES (?,?, ?, ?)`;
   db.query(saveUserCredentials, [userId, name, email, password], (err, result) => {
@@ -218,7 +217,6 @@ router.get('/tasks', (req, res) => {
   const sortOrder = req.query.sortOrder || 'asc';  // Default to ascending
   
   const query = `select * from ${DB_Data.Tasks_DB} order by ${sortBy} ${sortOrder}`
-  console.log(req);
   db.query(query,(err,result)=>{
     if(err){
       res.status(500).json({error:"we are unable to fetch the data",err});

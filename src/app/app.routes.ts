@@ -22,8 +22,8 @@ export const routes: Routes = [
     path: 'dashboard',
     loadComponent: () =>
       import('./navbar/navbar.component').then((m) => m.NavbarComponent),
-    // canActivate: [AuthGuard],
-    // canActivateChild: [AuthGuard],
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
     canMatch:[AuthGuard],
     children: [
       {

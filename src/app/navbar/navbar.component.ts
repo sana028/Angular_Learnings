@@ -48,7 +48,14 @@ export class NavbarComponent {
   };
   
   selectTheList = (route:any) =>{
-   this.selectedRoute = route.label;
+    if (route.label === 'Log Out') {
+      sessionStorage.clear(); 
+      
+      this.router.navigateByUrl(''); 
+    } else {
+      this.selectedRoute = route.label;
+    }
+   
   }
   toggleMenu() {
     this.isExpanded = !this.isExpanded;
