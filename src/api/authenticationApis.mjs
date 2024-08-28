@@ -44,9 +44,9 @@ router.get("/getData/:id", async (req, res) => {
 
     if (result.length === 0) {
       return res.status(404).json({ error: "Data not found" });
-    }
-
+    }else{
     res.status(200).json({ data: { ...result[0] } });
+    }
   });
 });
 
@@ -59,13 +59,15 @@ router.post("/login", async (req, res) => {
       return;
     }
     if (result.length > 0 && result[0].Access) {
+      console.log(result);
       const gener = generateToken(result);
       res.status(200).json({
         message: "Login Successfull",
         auth: { ...gener, id: result[0].Id },
       });
-    }
+    }else{
     res.status(403).json({ error: "you don't have access to this site" });
+    }
   });
 });
 
@@ -82,8 +84,9 @@ router.patch("/updateProfile", async (req, res) => {
       if (err) {
         res.status(500).json({ error: "Failed to insert data", err });
         return;
-      }
+      }else{
       res.status(200).json({ message: "Profile Updated Successfully" });
+      }
     }
   );
 });
@@ -94,8 +97,9 @@ router.get("/getSkills", async (req, res) => {
     if (err) {
       res.status(500).json({ error: "Failed to fetch data", err });
       return;
-    }
+    }else{
     res.status(200).json({ data: result });
+    }
   });
 });
 
@@ -105,8 +109,9 @@ router.get("/getDesignations", async (req, res) => {
     if (err) {
       res.status(500).json({ error: "Failed to insert data" });
       return;
-    }
+    }else{
     res.status(200).json({ data: result });
+    }
   });
 });
 
@@ -140,8 +145,9 @@ router.post("/addTask", async (req, res) => {
       if (err) {
         res.status(500).json({ error: "Failed to insert data", err });
         return;
-      }
+      }else{
       res.status(200).json({ message: "Task Added Successfully" });
+      }
     }
   );
 });
@@ -155,8 +161,9 @@ router.get("/getTasksData", (req, res) => {
     }
     if (result.length === 0) {
       return res.status(404).json({ message: "No tasks found" });
-    }
+    }else{
     return res.status(200).json({ ... result });
+    }
   });
 });
 
@@ -171,8 +178,9 @@ router.get("/getTask/:taskId", (req, res) => {
     }
     if (result.length === 0) {
       res.status(404).json({ message: "No task found with the given id" });
-    }
+    }else{
     res.status(200).json({ ...result });
+    }
   });
 });
 
@@ -206,8 +214,9 @@ router.patch("/updateTask/:taskId", (req, res) => {
           .status(500)
           .json({ error: "we are unable to update the data", err });
         return;
-      }
+      }else{
       res.status(200).json({ message: "Task Updated Successfully" });
+      }
     }
   );
 });
@@ -220,8 +229,9 @@ router.get('/tasks', (req, res) => {
   db.query(query,(err,result)=>{
     if(err){
       res.status(500).json({error:"we are unable to fetch the data",err});
-    }
+    }else{
     res.status(200).json({...result});
+    }
   })
 });
 export default router;
