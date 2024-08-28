@@ -23,7 +23,6 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./navbar/navbar.component').then((m) => m.NavbarComponent),
     canActivate: [AuthGuard],
-    canActivateChild: [AuthGuard],
     canMatch:[AuthGuard],
     children: [
       {
@@ -38,6 +37,7 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./profile/profile.component').then((m) => m.ProfileComponent),
         resolve:{'resolvedData' : AuthGuard},
+        canActivateChild: [AuthGuard],
         children: [
           {
             path: 'edit-profile/:id',

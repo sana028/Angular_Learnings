@@ -43,10 +43,10 @@ export class SigninComponent{
         (response: any) => {
           if (response) {
             this.isLoading = false;
-              console.log(response.auth.token);
               sessionStorage.setItem('access_token', response.auth.token);
               sessionStorage.setItem('expiresIn', response.auth.decodedToken);
               sessionStorage.setItem('userId',response.auth.id);
+              sessionStorage.setItem('role',response.auth.role);
               this.router.navigateByUrl('dashboard');
           }
         },

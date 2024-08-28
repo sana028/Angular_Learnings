@@ -35,10 +35,11 @@ export class AuthGuard
   }
 
   canActivateChild(): boolean {
-    if (this.authService.isAuthenticated()) {
+    if (this.authService.isUserAdmin()) {
       return true;
     } else {
-      this.router.navigateByUrl('');
+      alert('access-denied');
+      this.router.navigateByUrl('/dashboard');
       return false;
     }
   }

@@ -16,4 +16,17 @@ export class AuthService {
     }
     return false;
   }
+
+  isUserAdmin():boolean{
+    if (typeof sessionStorage !== 'undefined') {
+      const role = sessionStorage.getItem('role');
+      if(role ==='admin'){
+        return true;
+      }
+        return false;
+      
+    }
+    return false;
+
+  }
 }

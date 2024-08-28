@@ -58,7 +58,7 @@ router.post("/login", async (req, res) => {
       res.status(500).json({ error: "you don't have access to this site" });
       return;
     }
-    if (result.length > 0 && result[0].Access) {
+    if (result.length > 0) {
       console.log(result);
       const gener = generateToken(result);
       res.status(200).json({
