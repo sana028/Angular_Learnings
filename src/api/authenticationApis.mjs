@@ -77,6 +77,7 @@ router.patch("/updateProfile", async (req, res) => {
   const updateData = `UPDATE ${DB_Data.Credentails_DB} SET Name = ?, Designation = ?, Skills = ?,
     photo = ?, About = ? WHERE Id = ?`;
   const skills = JSON.stringify(skill);
+  console.log(name,designation,skills,photo,about,id);
   db.query(
     updateData,
     [name, designation, skills, photo, about, id],

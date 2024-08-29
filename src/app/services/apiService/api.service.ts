@@ -47,7 +47,6 @@ export class ApiService {
     let params = new HttpParams()
       .set('sortBy', sortBy)
       .set('sortOrder', sortOrder);
-    console.log(params);
     return this.http.get<Object[]>(apis.BASE_URL+'/tasks',{params})
   }
 }

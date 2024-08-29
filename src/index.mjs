@@ -7,7 +7,7 @@ import bodyParser from 'body-parser';
 
 const app=express();
 app.use(cors({
-  origin: 'http://localhost:4200', // Replace this with the frontend URL
+  origin: 'http://localhost:50496', // Replace this with the frontend URL
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   allowedHeaders: 'Content-Type, Authorization'
 }));

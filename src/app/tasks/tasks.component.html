@@ -65,9 +65,12 @@
       <div class="example-container mat-elevation-z8">
         <mat-table
           class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
-          [dataSource]="dataSource"
-          matSort
-          (matSortChange)="sortData($event)"
+          [dataSource]="dataSource.filteredData"
+          matSort   
+          matSortActive="statusWeight"
+           matSortDirection='asc' 
+          
+          (matSortChange)="sortData($event)"       
         >
           <ng-container
             *ngFor="let column of displayedColumns"

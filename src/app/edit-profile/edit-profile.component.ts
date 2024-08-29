@@ -51,6 +51,7 @@ export class EditProfileComponent implements OnInit, AfterViewInit, canComponent
       skill:response?.Skills,
       about:response?.About
     });
+    this.id = response.Id;
   }
 
   ngAfterViewInit(): void {
