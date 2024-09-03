@@ -50,7 +50,6 @@ export class NavbarComponent {
   selectTheList = (route:any) =>{
     if (route.label === 'Log Out') {
       sessionStorage.clear(); 
-      
       this.router.navigateByUrl(''); 
     } else {
       this.selectedRoute = route.label;

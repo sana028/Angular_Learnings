@@ -84,6 +84,5 @@
       >
     </p>
   </div>
-  <app-toaster [status]="statusType" *ngIf="statusType!==''"></app-toaster>
 </div>
-<app-loader *ngIf="isLoading"></app-loader>
+<app-loader *ngIf="isLoading | async"></app-loader>

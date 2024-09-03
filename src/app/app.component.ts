@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { UnrelatedService } from './services/unrelated.service';
 import { LogInService } from './services/logInSerive/log-in.service';
@@ -12,12 +12,18 @@ import { IfdirectiveDirective } from './directives/StructuralDirectives/ifdirect
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [
-    RouterOutlet,
-  ],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
-  providers: [UnrelatedService,LogInService,AuthGuard,AuthService,ApiService,FilterPipe,IfdirectiveDirective],
+  providers: [
+    UnrelatedService,
+    LogInService,
+    AuthGuard,
+    AuthService,
+    ApiService,
+    FilterPipe,
+    IfdirectiveDirective,
+  ],
 })
 export class AppComponent{
   title = 'first';

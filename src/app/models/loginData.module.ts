@@ -1,8 +1,11 @@
-export interface signUpPayload{
-   id:number;
-   name:string,
-   email:string,
-   password:string
+export interface responseData{
+   message: string,
+    auth: {
+        token:string,
+        decodedToken:string,
+        role: string,
+        id: string
+    }
 }
 
 export interface loginPayload{

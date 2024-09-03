@@ -1,4 +1,4 @@
-import { Component, ViewChild ,ChangeDetectorRef} from '@angular/core';
+import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { AppMaterialModule } from '../app-material/app-material.module';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -26,14 +26,17 @@ import { IfdirectiveDirective } from '../directives/StructuralDirectives/ifdirec
 })
 export class TasksComponent implements AfterViewInit, OnInit {
   displayedColumns: string[] = [];
-  dataSource:any=[];
+  dataSource: any = [];
   isLoading: boolean = false;
-  sortDirection:string = '';
-  sortActiveColumn:string =''
+  sortDirection: string = '';
+  sortActiveColumn: string = '';
 
   @ViewChild('testSort') sort: MatSort | any;
   @ViewChild(MatPaginator) paginator: MatPaginator | any;
-  constructor(private api: ApiService, private cdr:ChangeDetectorRef) {}
+  constructor(
+    private api: ApiService,
+    private cdr: ChangeDetectorRef,
+  ) {}
 
   ngOnInit(): void {
     this.isLoading = true;
@@ -42,7 +45,6 @@ export class TasksComponent implements AfterViewInit, OnInit {
       (response: any) => {
         let tasksArray = Object.values(response);
         this.dataSource = new MatTableDataSource(tasksArray);
-        console.log(this.dataSource)
         this.displayedColumns = Object.keys(response[0]).filter(
           (key) => key !== 'Id' && key !== 'Description'
         );
@@ -62,31 +64,33 @@ export class TasksComponent implements AfterViewInit, OnInit {
 
   sortData = (sortState: any) => {
     this.sortDirection = sortState.direction || 'asc';
-    this.sortActiveColumn = sortState.active ?  sortState.active : 'Task_Id' ;
+    this.sortActiveColumn = sortState.active ? sortState.active : 'Task_Id';
     this.getSortedTasks();
-  }
+  };
 
-  getSortedTasks(){
-    
-    this.api.filterTaskData(this.sortActiveColumn, this.sortDirection).subscribe(
-      (response) => {
-        if (response[0]) {
-          if (response[0] !== null && typeof response[0] === 'object') {
-            let tasksArray = Object.values(response);
-            this.dataSource = new MatTableDataSource(tasksArray);
-            this.displayedColumns = Object.keys(response[0]).filter(
-              (key) => key !== 'Id' && key !== 'Description'
-            );
-            this.displayedColumns.push('actions');    
-          
-          } else {
-            console.error('Response format is not as expected');
+  getSortedTasks() {
+    // this.isLoading = true;
+    this.api
+      .filterTaskData(this.sortActiveColumn, this.sortDirection)
+      .subscribe(
+        (response) => {
+          if (response[0]) {
+            if (response[0] !== null && typeof response[0] === 'object') {
+              let tasksArray = Object.values(response);
+              this.dataSource = new MatTableDataSource(tasksArray);
+              this.displayedColumns = Object.keys(response[0]).filter(
+                (key) => key !== 'Id' && key !== 'Description'
+              );
+              this.displayedColumns.push('actions');
+              //  this.isLoading = false;
+            } else {
+              console.error('Response format is not as expected');
+            }
           }
+        },
+        (error) => {
+          console.log(error);
         }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      );
   }
 }
