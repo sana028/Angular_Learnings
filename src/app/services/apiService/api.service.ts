@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import  {apis} from '../../../environments/apiEnvironments';
-import { signUpPayload } from '../../models/loginData.module';
+import { UserData } from '../../models/loginData.module';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +11,8 @@ export class ApiService {
 
   constructor(private http:HttpClient) { }
 
-  getUserData(id:number):Observable<signUpPayload>{
-    return this.http.get<signUpPayload>(apis.BASE_URL+'/getData/'+id);
+  getUserData(id:number):Observable<UserData>{
+    return this.http.get<UserData>(apis.BASE_URL+'/getData/'+id);
    }
 
   getSkills():Observable<string[]>{
