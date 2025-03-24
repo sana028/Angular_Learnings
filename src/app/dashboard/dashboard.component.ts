@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router,NavigationStart, RoutesRecognized, RouteConfigLoadStart, RouteConfigLoadEnd, NavigationEnd, NavigationCancel, NavigationError, ChildActivationStart, ChildActivationEnd } from '@angular/router';
 
 @Component({
@@ -8,7 +8,10 @@ import { Router,NavigationStart, RoutesRecognized, RouteConfigLoadStart, RouteCo
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
-export class DashboardComponent{
+export class DashboardComponent implements OnInit{
+  ngOnInit(): void {
+    console.log("dashboard loaded");
+   }
   constructor(private router:Router){
     router.events.subscribe((event)=>{
       if (event instanceof NavigationStart) {
