@@ -14,6 +14,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 export class LoaderComponent implements OnInit {
 
    ngOnInit(): void {
+    console.log("loader loaded");
    }
   
 }
