@@ -28,7 +28,12 @@
                 "glob": "**/*",
                 "input": "src/assets",
                 "output": "/assets"
-              }
+              },
+            {
+              "glob":"**/*",
+              "input": "src/uploads",
+              "output": "/uploads"
+            }
             ],
             "styles": [
               "@angular/material/prebuilt-themes/azure-blue.css",

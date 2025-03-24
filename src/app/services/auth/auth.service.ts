@@ -12,6 +12,7 @@ export class AuthService {
       }
       const decodedTokenTime: any = sessionStorage.getItem('expiresIn');
       const currentTime: any = Math.floor(Date.now() / 1000);
+      console.log(currentTime);
       return currentTime < decodedTokenTime;
     }
     return false;
@@ -27,6 +28,5 @@ export class AuthService {
       
     }
     return false;
-
   }
 }

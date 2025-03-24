@@ -14,6 +14,9 @@ app.use(cors({
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({ limit: '10mb' })); // Adjust limit as needed
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
+
 app.use('/api',router);
 const port = 44356;
 export const db= await mysql.createConnection({

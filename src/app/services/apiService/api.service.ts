@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHandler, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import  {apis} from '../../../environments/apiEnvironments';
 import { UserData } from '../../models/loginData.module';
@@ -23,8 +23,8 @@ export class ApiService {
     return this.http.get<string[]>(apis.BASE_URL+'/getDesignations');
   }
 
-  updateProfile(data:any,id:number):Observable<any>{4
-    return this.http.patch<any>(apis.BASE_URL+'/updateProfile',{...data.value,id:id});
+  updateProfile(data:any):Observable<any>{
+    return this.http.patch<any>(apis.BASE_URL+'/updateProfile',data);
   }
 
   getAllTasksList():Observable<Object[]>{

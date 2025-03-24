@@ -2,24 +2,28 @@ import express from "express";
 import { db } from "../index.mjs";
 import { DB_Data } from "../helpers/constants.mjs";
 import generateToken from "../jwtToken.mjs";
+import multer from "multer";
 
 const router = express.Router();
 
 router.post("/createAccount", async (req, res) => {
   const { userId, name, email, password } = req.body;
   const saveUserCredentials = `INSERT INTO ${DB_Data.Credentails_DB} (Id,Name, Email, Password) VALUES (?,?, ?, ?)`;
-  db.query(saveUserCredentials, [userId, name, email, password], (err, result) => {
-    if (err) {
-      res.status(500).json({ error: "Failed to Create Account",err });
-      return;
-    }
+  db.query(
+    saveUserCredentials,
+    [userId, name, email, password],
+    (err, result) => {
+      if (err) {
+        res.status(500).json({ error: "Failed to Create Account", err });
+        return;
+      }
       const gener = generateToken(result);
       res.status(200).json({
         message: "Login Successfull",
         auth: { ...gener, id: userId },
       });
-
-  });
+    }
+  );
 });
 
 router.get("/getAllUserData", async (req, res) => {
@@ -44,8 +48,8 @@ router.get("/getData/:id", async (req, res) => {
 
     if (result.length === 0) {
       return res.status(404).json({ error: "Data not found" });
-    }else{
-    res.status(200).json({ data: { ...result[0] } });
+    } else {
+      res.status(200).json({ data: { ...result[0] } });
     }
   });
 });
@@ -65,28 +69,40 @@ router.post("/login", async (req, res) => {
         message: "Login Successfull",
         auth: { ...gener, id: result[0].Id },
       });
-    }else{
-    res.status(403).json({ error: "you don't have access to this site" });
+    } else {
+      res.status(403).json({ error: "you don't have access to this site" });
     }
   });
 });
 
-router.patch("/updateProfile", async (req, res) => {
-  const { name, designation, skill, photo, id, about } = req.body;
-  console.log(req.body);
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/"); // specify the destination folder
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "-" + file.originalname); // specify the filename
+  },
+});
+
+const upload = multer({ storage: storage });
+
+router.patch("/updateProfile", upload.single("file"), (req, res) => {
+  const { name, designation, skill, id, about } = req.body;
+  const file = req.file.path;
+  const mimeType = req.file.mimetype;
   const updateData = `UPDATE ${DB_Data.Credentails_DB} SET Name = ?, Designation = ?, Skills = ?,
-    photo = ?, About = ? WHERE Id = ?`;
+    photo = ?, About = ? , photoType=? WHERE Id = ?`;
   const skills = JSON.stringify(skill);
-  console.log(name,designation,skills,photo,about,id);
+  console.log(name, designation, skills, file, about,mimeType,id);
   db.query(
     updateData,
-    [name, designation, skills, photo, about, id],
+    [name, designation, skills, file, about,mimeType, id],
     (err, result) => {
       if (err) {
         res.status(500).json({ error: "Failed to insert data", err });
         return;
-      }else{
-      res.status(200).json({ message: "Profile Updated Successfully" });
+      } else {
+        res.status(200).json({ message: "Profile Updated Successfully" });
       }
     }
   );
@@ -98,8 +114,8 @@ router.get("/getSkills", async (req, res) => {
     if (err) {
       res.status(500).json({ error: "Failed to fetch data", err });
       return;
-    }else{
-    res.status(200).json({ data: result });
+    } else {
+      res.status(200).json({ data: result });
     }
   });
 });
@@ -110,8 +126,8 @@ router.get("/getDesignations", async (req, res) => {
     if (err) {
       res.status(500).json({ error: "Failed to insert data" });
       return;
-    }else{
-    res.status(200).json({ data: result });
+    } else {
+      res.status(200).json({ data: result });
     }
   });
 });
@@ -146,8 +162,8 @@ router.post("/addTask", async (req, res) => {
       if (err) {
         res.status(500).json({ error: "Failed to insert data", err });
         return;
-      }else{
-      res.status(200).json({ message: "Task Added Successfully" });
+      } else {
+        res.status(200).json({ message: "Task Added Successfully" });
       }
     }
   );
@@ -158,12 +174,14 @@ router.get("/getTasksData", (req, res) => {
 
   db.query(getTasksList, (err, result) => {
     if (err) {
-      return res.status(500).json({ error: "we are unable to fetch the data", err });
+      return res
+        .status(500)
+        .json({ error: "we are unable to fetch the data", err });
     }
     if (result.length === 0) {
       return res.status(404).json({ message: "No tasks found" });
-    }else{
-    return res.status(200).json({ ... result });
+    } else {
+      return res.status(200).json({ ...result });
     }
   });
 });
@@ -179,8 +197,8 @@ router.get("/getTask/:taskId", (req, res) => {
     }
     if (result.length === 0) {
       res.status(404).json({ message: "No task found with the given id" });
-    }else{
-    res.status(200).json({ ...result });
+    } else {
+      res.status(200).json({ ...result });
     }
   });
 });
@@ -193,7 +211,7 @@ router.patch("/updateTask/:taskId", (req, res) => {
     taskSpentHours,
     taskExpectedHors,
     taskPriority,
-    taskStatus
+    taskStatus,
   } = req.body;
   const updateTask = `UPDATE ${DB_Data.Tasks_DB} SET taskExpectedHors = ?, TaskDescription
     = ?, taskSpentHours = ?, TaskEndDate = ?, taskStatus = ?, TaskPriority =
@@ -207,7 +225,7 @@ router.patch("/updateTask/:taskId", (req, res) => {
       taskExpectedHors,
       taskPriority,
       taskStatus,
-      taskId
+      taskId,
     ],
     (err, result) => {
       if (err) {
@@ -215,24 +233,24 @@ router.patch("/updateTask/:taskId", (req, res) => {
           .status(500)
           .json({ error: "we are unable to update the data", err });
         return;
-      }else{
-      res.status(200).json({ message: "Task Updated Successfully" });
+      } else {
+        res.status(200).json({ message: "Task Updated Successfully" });
       }
     }
   );
 });
 
-router.get('/tasks', (req, res) => {
-  const sortBy = req.query.sortBy || 'TaskName'; // Default sort by TaskName
-  const sortOrder = req.query.sortOrder || 'asc';  // Default to ascending
-  
-  const query = `select * from ${DB_Data.Tasks_DB} order by ${sortBy} ${sortOrder}`
-  db.query(query,(err,result)=>{
-    if(err){
-      res.status(500).json({error:"we are unable to fetch the data",err});
-    }else{
-    res.status(200).json({...result});
+router.get("/tasks", (req, res) => {
+  const sortBy = req.query.sortBy || "TaskName"; // Default sort by TaskName
+  const sortOrder = req.query.sortOrder || "asc"; // Default to ascending
+
+  const query = `select * from ${DB_Data.Tasks_DB} order by ${sortBy} ${sortOrder}`;
+  db.query(query, (err, result) => {
+    if (err) {
+      res.status(500).json({ error: "we are unable to fetch the data", err });
+    } else {
+      res.status(200).json({ ...result });
     }
-  })
+  });
 });
 export default router;
